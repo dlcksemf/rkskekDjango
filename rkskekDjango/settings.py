@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/3.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
-
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -42,7 +42,9 @@ INSTALLED_APPS = [
     "rest_framework",
     "rest_framework_simplejwt",
     "corsheaders",
+    'channels',
     # local apps
+    'chat',
 ]
 
 MIDDLEWARE = [
@@ -84,13 +86,16 @@ WSGI_APPLICATION = 'rkskekDjango.wsgi.application'
 
 DATABASES = {
     'default': {
-                'ENGINE': 'django.db.backends.mysql',  # mysqlclient librarly 설치
-                'NAME': 'rkskekdb',
-                'USER': 'root',
-                'PASSWORD': '1234',  # mariaDB 설치 시 입력한 root 비밀번호 입력
-                'HOST': 'localhost',
-                'PORT': ''
+        'ENGINE': 'django.db.backends.mysql',  # mysqlclient librarly 설치
+        'NAME': 'rkskekdb',
+        'USER': 'root',
+        'PASSWORD': '1234',  # mariaDB 설치 시 입력한 root 비밀번호 입력
+        'HOST': 'localhost',
+        'PORT': '',
+        'TEST': {
+            'NAME': os.path.join(BASE_DIR, 'db_test.sqlite3')
         }
+    }
 }
 
 
@@ -142,3 +147,18 @@ MEDIA_ROOT = BASE_DIR / 'media'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CORS_ALLOWED_ORIGINS = ["http://localhost:3000"]
+
+
+# channels
+# https://channels.readthedocs.io/en/stable/installation.html
+
+ASGI_APPLICATION = "rkskekDjango.asgi.application"
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('127.0.0.1', 6379)],
+        },
+    },
+}
+

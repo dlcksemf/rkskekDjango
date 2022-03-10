@@ -4,4 +4,8 @@ djangorestframework
 djangorestframework-simplejwt
 django-cors-headers
 django-environ
+
 channels
+channels_redis
+asgiref
+selenium
