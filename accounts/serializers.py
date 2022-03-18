@@ -17,7 +17,7 @@ class UserCreationSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ["user_id", "nickname", "username", "password", "password2", "birthdate"]
+        fields = ["user_num", "username", "password", "password2", "nickname", "birthdate"]
 
     def validate(self, attrs):
         if attrs["password"] != attrs["password2"]:
@@ -40,9 +40,10 @@ class UserCreationSerializer(serializers.ModelSerializer):
 class TokenObtainPairSerializer(OriginTokenObtainPairSerializer):
     def validate(self, attrs):
         data: Dict = super().validate(attrs)
-        data["user_id"] = self.user.user_id
+        data["user_num"] = self.user.user_num
         data["is_staff"] = self.user.is_staff
         data["username"] = self.user.username
+        data["nickname"] = self.user.nickname
 
         return data
 

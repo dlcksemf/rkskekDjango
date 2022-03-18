@@ -43,8 +43,8 @@ INSTALLED_APPS = [
     "rest_framework",
     "rest_framework_simplejwt",
     "corsheaders",
-    # 'channels',
     # local apps
+    "accounts",
 ]
 
 MIDDLEWARE = [
@@ -164,12 +164,14 @@ REST_FRAMEWORK = {
 }
 
 SIMPLE_JWT = {
-    'USER_ID_FIELD': 'user_id',
+    'USER_ID_FIELD': 'user_num',
     'ACCESS_TOKEN_LIFETIME': timedelta(
         days=ACCESS_TOKEN_LIFETIME_DAYS,
         hours=ACCESS_TOKEN_LIFETIME_HOURS,
         minutes=ACCESS_TOKEN_LIFETIME_MINUTES,),
 }
+
+AUTH_USER_MODEL = 'accounts.User'
 
 
 # channels
@@ -185,4 +187,5 @@ SIMPLE_JWT = {
 #         },
 #     },
 # }
+
 
